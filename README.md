@@ -22,3 +22,9 @@ Jogo da memória simples com flutter.
 
 ![Memory Game...](readme/memory_game.gif)
 
+### #3 Memory Game
+
+Metodologia de estudo Pomodoro para focar nos estudos intercalando com minutos de pausa para relaxar.
+
+![Pomodoro App...](readme/pomodoro.gif)
+
