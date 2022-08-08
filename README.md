@@ -9,6 +9,11 @@ Repositório utilizado para disponibilizar projetos básicos utilizando Flutter.
 
 Primeiros passos com widgets, componentes stateless e statefull para introdução a biblioteca.
 
+###### IMPORTANTE
+ - Adicionar a biblioteca [`Flutter Icons`](https://pub.dev/packages/flutter_launcher_icons)
+ - Rodar esse comando: `flutter pub run flutter_launcher_icons:main`
+ - Alterar o nome do App em `android/app/src/main/AndroidManifest.xml`
+
 ![Olá Mundo...](readme/ola_mundo.gif)
 
 ### #2 Memory Game
