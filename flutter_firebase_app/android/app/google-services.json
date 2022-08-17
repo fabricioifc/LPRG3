@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "388094370663",
+    "project_id": "flutter-app-vda",
+    "storage_bucket": "flutter-app-vda.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:388094370663:android:d653e3e927c76ec8e145c2",
+        "android_client_info": {
+          "package_name": "com.example.flutter_firebase_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "388094370663-2gmperei20jjl4e6mqpmca0f643c8pg3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYZEJdW7-hTQK6oNMbadF8i7jOTUL8CkM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "388094370663-2gmperei20jjl4e6mqpmca0f643c8pg3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
