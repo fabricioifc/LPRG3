@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_firebase_app/pages/about_page.dart';
 import 'package:flutter_firebase_app/pages/home_page.dart';
 import 'package:flutter_firebase_app/pages/login_page.dart';
+import 'package:flutter_firebase_app/pages/refeicao/refeicao_form.dart';
+import 'package:flutter_firebase_app/pages/refeicoes_page.dart';
 import 'package:flutter_firebase_app/services/auth_service.dart';
 import 'package:provider/provider.dart';
 
@@ -9,6 +11,8 @@ class RoutersApp {
   static const String homePage = '/';
   static const String aboutPage = '/about';
   static const String loginPage = '/login';
+  static const String refeicoesPage = '/refeicoes';
+  static const String refeicoesFormPage = '/refeicoes/form';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     print(settings.name);
@@ -19,6 +23,10 @@ class RoutersApp {
         return MaterialPageRoute(builder: (_) => AboutPage());
       case loginPage:
         return MaterialPageRoute(builder: (_) => LoginPage());
+      case refeicoesPage:
+        return MaterialPageRoute(builder: (_) => RefeicoesPage());
+      case refeicoesFormPage:
+        return MaterialPageRoute(builder: (_) => RefeicaoForm());
       default:
         return MaterialPageRoute(builder: (_) {
           return Scaffold(
