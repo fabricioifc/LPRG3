@@ -1,6 +1,13 @@
 # LPRG3
 Programação para Dispositivos Móveis
 
+### Ambiente (LINUX)
+ [ ] Instalar o Android Studio. Ao instalar, também será instalado o Android SDK e o Android Tools para gerenciar as versões do SDK e o emulador do android (caso necessário).
+ [ ] Instalar o GIT: `sudo apt install git`
+ [ ] Configurar o GIT globalmente
+  - `git config --global user.name SEU_NOME`
+  - `git config --global user.email SEU_EMAIL`
+
 ## Projetos Práticos
 
 Repositório utilizado para disponibilizar projetos básicos utilizando Flutter.
