@@ -49,8 +49,9 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('Método Pomodoro | Timer'),
         actions: [
           Switch.adaptive(
-              value: themeProvider.isDarkMode,
-              onChanged: themeProvider.alterarTema)
+            value: themeProvider.isDark,
+            onChanged: themeProvider.alterar,
+          )
         ],
       ),
       body: SafeArea(

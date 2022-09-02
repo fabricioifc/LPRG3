@@ -4,24 +4,37 @@ import 'package:terceiro_app/utils/dark_theme_preference.dart';
 
 const themeStatus = "THEMESTATUS";
 
-class DarkThemeProvider extends ChangeNotifier {
-  late ThemeMode theme;
+class DarkThemeProvider with ChangeNotifier {
+  late bool _isDark;
+  late DarkThemePreference _preferences;
+  bool get isDark => _isDark;
 
-  bool get isDarkMode => theme == ThemeMode.dark;
-
-  DarkThemeProvider({bool? isDark}) {
-    isDark = isDark ?? false;
-    theme = isDark ? ThemeMode.dark : ThemeMode.light;
+  DarkThemeProvider() {
+    _isDark = false;
+    _preferences = DarkThemePreference();
+    getPreferences();
   }
 
-  Future<void> alterarTema() async {
-    // theme = isDark ? ThemeMode.dark : ThemeMode.light;
-    // darkThemePreference.setDarkTheme(isDark);
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool(themeStatus, isDarkMode);
+//Switching the themes
+  void alterar(bool value) {
+    _isDark = value;
+    _preferences.setDarkTheme(value);
     notifyListeners();
   }
 
-  ThemeMode get getTheme => theme;
+  getPreferences() async {
+    _isDark = await _preferences.getTheme();
+    notifyListeners();
+  }
+  // DarkThemePreference darkThemePreference = DarkThemePreference();
+  // bool _darkTheme = false;
+
+  // bool get darkTheme => _darkTheme;
+
+  // set darkTheme(bool value) {
+  //   print(value);
+  //   _darkTheme = value;
+  //   darkThemePreference.setDarkTheme(value);
+  //   notifyListeners();
+  // }
 }

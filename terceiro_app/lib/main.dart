@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:terceiro_app/providers/dark_theme_provider.dart';
 import 'package:terceiro_app/screens/home_screen.dart';
+import 'package:terceiro_app/utils/dark_theme_preference.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  DarkThemePreference preferences = DarkThemePreference();
+  bool isDark = await preferences.getTheme();
+
+  print("Dark -> ${isDark}");
+
   DarkThemeProvider darkThemeProvider = DarkThemeProvider();
 
   runApp(ChangeNotifierProvider(
     create: (context) => darkThemeProvider,
-    builder: (context, child) => MyApp(),
+    builder: (context, child) => const MyApp(),
   ));
 }
 
@@ -29,7 +37,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Flutter Demo',
       // themeMode: ThemeMode.system,
-      themeMode: themeProvider.theme,
+      themeMode: themeProvider.isDark ? ThemeMode.dark : ThemeMode.light,
       darkTheme: ThemeData.dark(),
       theme: ThemeData(
         primarySwatch: Colors.green,
