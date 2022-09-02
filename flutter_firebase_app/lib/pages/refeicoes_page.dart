@@ -12,26 +12,29 @@ class RefeicoesPage extends StatefulWidget {
 }
 
 class _RefeicoesPageState extends State<RefeicoesPage> {
-  late RefeicaoRepository repo;
+  late RefeicaoRepository repository;
 
   @override
   Widget build(BuildContext context) {
-    repo = context.watch<RefeicaoRepository>();
+    repository = context.watch<RefeicaoRepository>();
 
     return Scaffold(
       appBar: AppBar(title: const Text('Refeições'), actions: [
         IconButton(
-            onPressed: () =>
-                Navigator.pushNamed(context, RoutersApp.refeicoesFormPage),
-            icon: const Icon(Icons.add))
+            onPressed: () => Navigator.pushNamed(context, RoutersApp.homePage),
+            icon: const Icon(Icons.home))
       ]),
-      body: RefreshIndicator(
-        onRefresh: () => repo.fetchRefeicoes(),
-        child: Padding(
-          padding: const EdgeInsets.all(6.0),
-          child: FutureBuilder(builder:
+      body: FutureBuilder<List<Refeicao>>(
+          future: repository.fetchRefeicoes(),
+          builder:
               (BuildContext context, AsyncSnapshot<List<Refeicao>> snapshot) {
-            if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+            // print(snapshot.connectionState);
+            // print(snapshot.hasData);
+
+            if (snapshot.connectionState != ConnectionState.done &&
+                !snapshot.hasData) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasData) {
               return ListView.separated(
                   itemBuilder: (context, index) {
                     void _dismiss() {
@@ -42,7 +45,8 @@ class _RefeicoesPageState extends State<RefeicoesPage> {
 
                     return Dismissible(
                       onDismissed: ((direction) async {
-                        await repo.remover(repo.lista[index].id.toString());
+                        await repository
+                            .remover(repository.lista[index].id.toString());
                         _dismiss();
                       }),
                       background: Container(
@@ -66,7 +70,7 @@ class _RefeicoesPageState extends State<RefeicoesPage> {
                           )),
                       direction: DismissDirection.endToStart,
                       resizeDuration: const Duration(milliseconds: 200),
-                      key: ValueKey(repo.lista[index].id.toString()),
+                      key: ValueKey(repository.lista[index].id.toString()),
                       // key: UniqueKey(),
                       child: Container(
                         decoration: BoxDecoration(
@@ -75,13 +79,14 @@ class _RefeicoesPageState extends State<RefeicoesPage> {
                         child: ListTile(
                           onTap: () {
                             Navigator.pushNamed(context, "/edit",
-                                arguments: repo.lista[index]);
+                                arguments: repository.lista[index]);
                           },
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                           ),
-                          title: Text(repo.lista[index].name.toString()),
-                          subtitle: Text("${repo.lista[index].id.toString()}"),
+                          title: Text(repository.lista[index].name.toString()),
+                          subtitle:
+                              Text("${repository.lista[index].id.toString()}"),
                           trailing: const Icon(Icons.arrow_right_sharp),
                         ),
                       ),
@@ -89,7 +94,7 @@ class _RefeicoesPageState extends State<RefeicoesPage> {
                   },
                   separatorBuilder: (context, index) =>
                       const SizedBox(height: 1.0),
-                  itemCount: repo.lista.length);
+                  itemCount: repository.lista.length);
             }
             return Center(
                 child: ListView(
@@ -100,7 +105,10 @@ class _RefeicoesPageState extends State<RefeicoesPage> {
               ],
             ));
           }),
-        ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () =>
+            Navigator.pushNamed(context, RoutersApp.refeicoesFormPage),
+        child: const Icon(Icons.add),
       ),
     );
   }

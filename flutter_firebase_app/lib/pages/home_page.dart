@@ -14,8 +14,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    AuthService _auth = Provider.of<AuthService>(context);
-    final refeicaoRepo = context.watch<RefeicaoRepository>();
+    final AuthService _auth = Provider.of<AuthService>(context);
 
     return Scaffold(
       body: Center(
@@ -35,15 +34,21 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Text(_auth.usuario!.uid),
                 Text(_auth.usuario!.email.toString()),
-                ElevatedButton(onPressed: _irParaAbout, child: Text('About')),
                 ElevatedButton(
-                    onPressed: () => Navigator.pushReplacementNamed(
-                        context, RoutersApp.refeicoesPage),
-                    child: Text('Refeições')),
-                Text(refeicaoRepo.lista.length.toString())
+                    onPressed: _irParaAbout, child: const Text('About')),
+                ElevatedButton(
+                  onPressed: () => Navigator.of(context)
+                      .pushReplacementNamed(RoutersApp.refeicoesPage),
+                  child: const Text('Lista de Refeições'),
+                )
               ],
             ),
-            ElevatedButton(onPressed: _auth.logout, child: Text('Logout'))
+            ElevatedButton(
+              onPressed: _auth.logout,
+              child: Text('Logout'),
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.redAccent)),
+            )
           ],
         ),
       ),
