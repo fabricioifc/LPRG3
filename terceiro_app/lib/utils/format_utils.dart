@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
 class FormatUtils {
   static String secondsToFormatedString(int seconds) {
     int roundedMinutes = seconds ~/ 60;

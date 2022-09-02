@@ -26,3 +26,13 @@ const Map<PomodoroStatus, Color> statusColor = {
   PomodoroStatus.pausedLongBreak: Colors.orange,
   PomodoroStatus.setFinished: Colors.orange,
 };
+
+enum PomodoroStatus {
+  running,
+  paused,
+  runningShortBreak,
+  pausedShortBreak,
+  runningLongBreak,
+  pausedLongBreak,
+  setFinished;
+}

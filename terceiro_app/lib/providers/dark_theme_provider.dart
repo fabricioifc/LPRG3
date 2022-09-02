@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:terceiro_app/utils/dark_theme_preference.dart';
-
-const themeStatus = "THEMESTATUS";
 
 class DarkThemeProvider with ChangeNotifier {
   late bool _isDark;
