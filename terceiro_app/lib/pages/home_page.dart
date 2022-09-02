@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_beep/flutter_beep.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
-import 'package:terceiro_app/models/pomodoro_status.dart';
 import 'package:terceiro_app/providers/dark_theme_provider.dart';
 import 'package:terceiro_app/utils/constants.dart';
 import 'package:terceiro_app/utils/format_utils.dart';
