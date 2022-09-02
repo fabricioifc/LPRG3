@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_beep/flutter_beep.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:provider/provider.dart';
 import 'package:terceiro_app/models/pomodoro_status.dart';
+import 'package:terceiro_app/providers/dark_theme_provider.dart';
 import 'package:terceiro_app/utils/constants.dart';
 import 'package:terceiro_app/utils/format_utils.dart';
 import 'package:terceiro_app/widgets/custom_buttom.dart';
@@ -41,13 +43,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<DarkThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Método Pomodoro | Timer'),
         actions: [
-          IconButton(
-              onPressed: _resetButtonPressed,
-              icon: const Icon(Icons.restart_alt_outlined))
+          Switch.adaptive(
+              value: themeProvider.isDarkMode,
+              onChanged: themeProvider.alterarTema)
         ],
       ),
       body: SafeArea(
