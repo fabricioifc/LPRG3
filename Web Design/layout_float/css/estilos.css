@@ -1,0 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    outline: 0;
+}
+
+html {
+    font-size: 62.5%; /*10px*/
+}
+
+body {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.6rem; /*16px*/
+}
+
+body::after {
+    content: "";
+    background: url('/img/bg.jpg') no-repeat center center;
+    background-size: cover;
+    z-index: -1;
+    opacity: 0.5;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+}
+
+.container {
+    width: 1140px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+#header {
+    width: 100%;
+    background-color: rgb(255,0,0);
+    float: left;
+}
+
+#header #hgroup {
+    float: left;
+    padding: 10px 0;
+}
+
+img#banner {
+    float: right;
+    width: 500px;
+    padding: 10px 0;
+    max-width: 100%;
+}
+
+/* Navegação */
+#nav {
+    background: crimson;
+    /* overflow: auto; */
+    padding: 10px 0;
+}
+
+#nav ul li {
+    list-style: none;
+    display: inline;
+    padding: 5px 0px;
+    margin: 0 5px;
+}
+
+#nav ul#menu li {
+    float: left;
+    border-radius: 4px;
+}
+
+#nav ul.right li {
+    float: right;
+}
+
+#nav ul li a,
+#footer ul li a {
+    padding: 0 10px;
+    color: white;
+    text-decoration: none;
+}
+
+#nav ul#menu li.active {
+    background-color: darkred;
+}
+
+#nav ul#menu li:hover {
+    background-color: darkred;
+}
+
+/* Conteúdo principal */
+#main #section {
+    text-align: center;
+    color: #222;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#main #section h1 {
+    padding: 20px 0;
+    font-size: 4rem;
+    font-weight: 100;
+}
+
+#main #section button {
+    margin-top: 20px;
+}
+
+.btn {
+    font-family: 'Fredoka One';
+    padding: 15px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: crimson;
+    color: white;
+}
+
+.btn-default {
+    background-color: #f8f8f8;
+    color: #222;
+}
+
+.btn-primary:hover {
+    box-shadow: 0px 0px 2px 2px crimson;
+}
+
+.btn-default:hover {
+    box-shadow: 0px 0px 4px 4px #222;
+}
+
+#footer {
+    background-color: #222;
+    color: #f8f8f8;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    text-align: center;
+    padding: 20px 0;
+}
+
+#footer ul {
+    display: none;
+    margin-top: 10px;
+}
+
+#footer ul li {
+    display: inline;
+}
+
+/* Clearfix */
+.clearfix {
+    overflow: auto;
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+@media only screen and (max-width: 600px) {
+    #main #section {
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    #nav ul.right {
+        display: none;
+    }
+
+    #footer ul {
+        display: block;
+    }
+
+    #main #section h1 {
+        padding: 0;
+    }
+
+    #main #section h4 {
+        display: none;
+    }
+
+    #main #section p {
+        display: none;
+    }
+}
