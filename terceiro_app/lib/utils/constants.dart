@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:terceiro_app/models/pomodoro_status.dart';
 
 const pomodoroTotalTime = 25 /** 60*/;
 const shortBreakTime = 5 /** 60*/;
@@ -26,3 +25,13 @@ const Map<PomodoroStatus, Color> statusColor = {
   PomodoroStatus.pausedLongBreak: Colors.orange,
   PomodoroStatus.setFinished: Colors.orange,
 };
+
+enum PomodoroStatus {
+  running,
+  paused,
+  runningShortBreak,
+  pausedShortBreak,
+  runningLongBreak,
+  pausedLongBreak,
+  setFinished;
+}

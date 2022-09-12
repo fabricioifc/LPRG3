@@ -7,15 +7,7 @@ class RefeicaoRepository extends ChangeNotifier {
 
   List<Refeicao> get lista => _lista;
 
-  RefeicaoRepository() {
-    _carregar();
-  }
-
-  _carregar() async {
-    await getRefeicoes();
-  }
-
-  Future<List<Refeicao>> getRefeicoes() async {
+  Future<List<Refeicao>> fetchRefeicoes() async {
     var db = FirebaseFirestore.instance;
     QuerySnapshot<Map<String, dynamic>> snapshot =
         await db.collection('refeicoes').get();

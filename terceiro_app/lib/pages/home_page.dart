@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_beep/flutter_beep.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:terceiro_app/models/pomodoro_status.dart';
+import 'package:provider/provider.dart';
+import 'package:terceiro_app/providers/dark_theme_provider.dart';
 import 'package:terceiro_app/utils/constants.dart';
 import 'package:terceiro_app/utils/format_utils.dart';
 import 'package:terceiro_app/widgets/custom_buttom.dart';
@@ -18,14 +19,14 @@ const _btnTextStartNew = 'INICIAR NOVO';
 const _btnTextPause = 'PAUSE';
 const _btnTextReset = 'REINICIAR';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomePageState extends State<HomePage> {
   int _remainingTime = pomodoroTotalTime;
   String _btnText = _btnTextStart;
   PomodoroStatus pomodoroStatus = PomodoroStatus.paused;
@@ -41,89 +42,86 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<DarkThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Método Pomodoro | Timer'),
         actions: [
-          IconButton(
-              onPressed: _resetButtonPressed,
-              icon: const Icon(Icons.restart_alt_outlined))
+          Switch.adaptive(
+            value: themeProvider.isDark,
+            onChanged: themeProvider.alterar,
+          )
         ],
       ),
       body: SafeArea(
           child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-            _sizedBox(),
-            _titleScreen(
-              // bgColor: Theme.of(context).primaryColor,
-              text: 'Método Pomodoro',
-            ),
-            _sizedBox(),
-            Text(
-              statusDescription[pomodoroStatus].toString(),
-              // style: TextStyle(color: Theme.of(context).primaryColor),
-            ),
-            _sizedBox(),
-            Expanded(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                _circularIndicator(
-                  text: FormatUtils.secondsToFormatedString(_remainingTime),
-                ),
-                _sizedBox(),
-                ProgressIcons(
-                  total: pomodoroPerSet,
-                  done: _pomodoroNum - (_setNum * pomodoroPerSet),
-                ),
-                _sizedBox(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CustomButtom(
-                      onClick: _mainButtonPressed,
-                      text: _btnText,
-                    ),
-                    CustomButtom(
-                      onClick: _resetButtonPressed,
-                      text: _btnTextReset,
-                    ),
-                  ],
-                )
-              ],
-            ))
-          ])),
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _titleScreen(
+                // bgColor: Theme.of(context).primaryColor,
+                text: 'Método Pomodoro',
+              ),
+              Text(
+                statusDescription[pomodoroStatus].toString(),
+                // style: TextStyle(color: Theme.of(context).primaryColor),
+              ),
+            ],
+          ),
+          _circularIndicator(
+            text: FormatUtils.secondsToFormatedString(_remainingTime),
+          ),
+          ProgressIcons(
+            total: pomodoroPerSet,
+            done: _pomodoroNum - (_setNum * pomodoroPerSet),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CustomButtom(
+                onClick: _mainButtonPressed,
+                text: _btnText,
+              ),
+              CustomButtom(
+                onClick: _resetButtonPressed,
+                text: _btnTextReset,
+              ),
+            ],
+          )
+        ],
+      )),
     );
   }
 
   Widget _circularIndicator({required String text}) {
     return CircularPercentIndicator(
       radius: 120.0,
-      lineWidth: 12.0,
+      lineWidth: 22.0,
       percent: _getPomodoroPercent(),
       circularStrokeCap: CircularStrokeCap.round,
       center: Text(
         text,
-        style: TextStyle(fontSize: 40.0),
+        style: const TextStyle(fontSize: 36.0),
       ),
       progressColor: statusColor[pomodoroStatus],
     );
   }
 
-  Widget _sizedBox() {
-    return const SizedBox(
-      height: 10.0,
-    );
-  }
+  // Widget _sizedBox() {
+  //   return const SizedBox(
+  //     height: 10.0,
+  //   );
+  // }
 
   Widget _titleScreen({required String text}) {
     return Text(
       text,
-      style: TextStyle(fontSize: 32.0),
+      style: const TextStyle(fontSize: 32.0),
     );
   }
 

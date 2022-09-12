@@ -12,98 +12,103 @@ class RefeicoesPage extends StatefulWidget {
 }
 
 class _RefeicoesPageState extends State<RefeicoesPage> {
-  late RefeicaoRepository repo;
+  late RefeicaoRepository repository;
 
   @override
   Widget build(BuildContext context) {
-    repo = context.watch<RefeicaoRepository>();
+    repository = context.watch<RefeicaoRepository>();
 
     return Scaffold(
       appBar: AppBar(title: const Text('Refeições'), actions: [
         IconButton(
-            onPressed: () =>
-                Navigator.pushNamed(context, RoutersApp.refeicoesFormPage),
-            icon: const Icon(Icons.add))
+            onPressed: () => Navigator.pushNamed(context, RoutersApp.homePage),
+            icon: const Icon(Icons.home))
       ]),
-      body: RefreshIndicator(
-        onRefresh: () => repo.getRefeicoes(),
-        child: Padding(
-          padding: const EdgeInsets.all(6.0),
-          child: FutureBuilder(
-              future: repo.getRefeicoes(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<List<Refeicao>> snapshot) {
-                if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                  return ListView.separated(
-                      itemBuilder: (context, index) {
-                        void _dismiss() {
-                          setState(() {
-                            snapshot.data?.removeAt(index);
-                          });
-                        }
+      body: FutureBuilder<List<Refeicao>>(
+          future: repository.fetchRefeicoes(),
+          builder:
+              (BuildContext context, AsyncSnapshot<List<Refeicao>> snapshot) {
+            // print(snapshot.connectionState);
+            // print(snapshot.hasData);
 
-                        return Dismissible(
-                          onDismissed: ((direction) async {
-                            await repo.remover(repo.lista[index].id.toString());
-                            _dismiss();
-                          }),
-                          background: Container(
-                              decoration: const BoxDecoration(
-                                color: Colors.red,
-                              ),
-                              padding: const EdgeInsets.only(right: 14.0),
-                              alignment: AlignmentDirectional.centerEnd,
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    "EXCLUIR",
-                                    style: TextStyle(color: Colors.white70),
-                                  ),
-                                  Icon(
-                                    Icons.delete,
-                                    color: Colors.white70,
-                                  )
-                                ],
-                              )),
-                          direction: DismissDirection.endToStart,
-                          resizeDuration: const Duration(milliseconds: 200),
-                          key: ValueKey(repo.lista[index].id.toString()),
-                          // key: UniqueKey(),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                            ),
-                            child: ListTile(
-                              onTap: () {
-                                Navigator.pushNamed(context, "/edit",
-                                    arguments: repo.lista[index]);
-                              },
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              title: Text(repo.lista[index].name.toString()),
-                              subtitle:
-                                  Text("${repo.lista[index].id.toString()}"),
-                              trailing: const Icon(Icons.arrow_right_sharp),
-                            ),
+            if (snapshot.connectionState != ConnectionState.done &&
+                !snapshot.hasData) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasData) {
+              return ListView.separated(
+                  itemBuilder: (context, index) {
+                    void _dismiss() {
+                      setState(() {
+                        snapshot.data?.removeAt(index);
+                      });
+                    }
+
+                    return Dismissible(
+                      onDismissed: ((direction) async {
+                        await repository
+                            .remover(repository.lista[index].id.toString());
+                        _dismiss();
+                      }),
+                      background: Container(
+                          decoration: const BoxDecoration(
+                            color: Colors.red,
                           ),
-                        );
-                      },
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(height: 1.0),
-                      itemCount: repo.lista.length);
-                }
-                return Center(
-                    child: ListView(
-                  children: const <Widget>[
-                    Align(
-                        alignment: AlignmentDirectional.center,
-                        child: Text('No data available')),
-                  ],
-                ));
-              }),
-        ),
+                          padding: const EdgeInsets.only(right: 14.0),
+                          alignment: AlignmentDirectional.centerEnd,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                "EXCLUIR",
+                                style: TextStyle(color: Colors.white70),
+                              ),
+                              Icon(
+                                Icons.delete,
+                                color: Colors.white70,
+                              )
+                            ],
+                          )),
+                      direction: DismissDirection.endToStart,
+                      resizeDuration: const Duration(milliseconds: 200),
+                      key: ValueKey(repository.lista[index].id.toString()),
+                      // key: UniqueKey(),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                        ),
+                        child: ListTile(
+                          onTap: () {
+                            Navigator.pushNamed(context, "/edit",
+                                arguments: repository.lista[index]);
+                          },
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          title: Text(repository.lista[index].name.toString()),
+                          subtitle:
+                              Text("${repository.lista[index].id.toString()}"),
+                          trailing: const Icon(Icons.arrow_right_sharp),
+                        ),
+                      ),
+                    );
+                  },
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: 1.0),
+                  itemCount: repository.lista.length);
+            }
+            return Center(
+                child: ListView(
+              children: const <Widget>[
+                Align(
+                    alignment: AlignmentDirectional.center,
+                    child: Text('No data available')),
+              ],
+            ));
+          }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () =>
+            Navigator.pushNamed(context, RoutersApp.refeicoesFormPage),
+        child: const Icon(Icons.add),
       ),
     );
   }
