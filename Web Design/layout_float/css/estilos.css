@@ -8,12 +8,12 @@
 }
 
 html {
-    font-size: 62.5%; /*10px*/
+    font-size: 62.5%;
 }
 
 body {
     font-family: 'Fredoka One', cursive;
-    font-size: 1.6rem; /*16px*/
+    font-size: 1.6rem;
 }
 
 body::after {
@@ -33,6 +33,7 @@ body::after {
     width: 1140px;
     max-width: 100%;
     margin: 0 auto;
+    padding: 0 10px;
 }
 
 #header {
@@ -97,9 +98,9 @@ img#banner {
     color: #222;
 
     position: absolute;
-    top: 50%;
+    top: 25%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -25%);
 }
 
 #main #section h1 {
@@ -109,7 +110,7 @@ img#banner {
 }
 
 #main #section button {
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .btn {
